@@ -1,0 +1,18 @@
+module instruction_memory(
+	input[31:0]A,
+	output reg [31:0]RD
+);
+	reg[31:0] inst_mem[63:0];
+	integer k;
+	
+	initial
+	$readmemh("instructions.txt",inst_mem);
+	initial begin
+	#10
+	for (k=0; k<21; k=k+1)
+	$display("%d:%h",k,inst_mem[k]);
+	end
+	always @(A)
+		RD = inst_mem[A[31:2]];
+
+endmodule
